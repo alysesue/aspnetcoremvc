@@ -69,9 +69,9 @@ namespace GrandeTravelMVC.Controllers
                 identityUser.Email = vm.UserName;
                 //string sms = SmsService.SendSMSPost();
 
-                const string accountSid = "AC17f3a065df963972656b6ff961e5cb76";
+                const string accountSid = "";
 
-                const string authToken = "d3c6480f128a9edfcec762e51ef18116";
+                const string authToken = "";
 
                 TwilioClient.Init(accountSid, authToken);
 
@@ -81,7 +81,7 @@ namespace GrandeTravelMVC.Controllers
 
                     to,
 
-                    from: new PhoneNumber("+61407888078"), //  From number, must be an SMS-enabled Twilio number ( This will send sms from ur "To" numbers ).
+                    from: new PhoneNumber(""), //  From number, must be an SMS-enabled Twilio number ( This will send sms from ur "To" numbers ).
 
                     body: $"Hi {vm.UserName} thanks for signing up with Grande Travel");
 

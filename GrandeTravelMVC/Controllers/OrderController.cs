@@ -87,7 +87,7 @@ namespace GrandeTravelMVC.Controllers
                 //msg.AddContent(MimeType.Html, "<p>Hello World!</p>");
 
                 //send email
-                var apiKey = ("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");
+                var apiKey = ("");
                 var client = new SendGridClient(apiKey);
                 var from = new EmailAddress("alyse.sue@gmail.com", "Alyse Sue");
                 var subject = "Order confirmation: Grande Travel";
@@ -95,7 +95,7 @@ namespace GrandeTravelMVC.Controllers
                 var plainTextContent = "and easy to do anywhere, even with C#";
                 var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-                var bytes = System.IO.File.ReadAllBytes("C:/Users/AS/Desktop/A/GrandeTravelMVC7/GrandeTravelMVC/wwwroot/attachments/voucher.txt");
+                var bytes = System.IO.File.ReadAllBytes("GrandeTravelMVC/wwwroot/attachments/voucher.txt");
                 var file = Convert.ToBase64String(bytes);
                 msg.AddAttachment("voucher.txt", file);
                 var response = await client.SendEmailAsync(msg);
