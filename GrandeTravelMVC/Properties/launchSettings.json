@@ -1,0 +1,31 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:58731/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "GrandeTravelMVC": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:58732/"
+    }
+  },
+  "PayPal": {
+    "clientId": "AUL-BFeyapalLvRWskJD3kgWCiSEPpxW6O91_Qy363dyraE5NGkJmqcuTjmhyaUBKBNeZaOy4mktkZD8",
+    "clientSecret": "EBNCPf1hw5YkQ9A8jIS6vprV2cIn8bQmAatSZNgOW9QxL7HibiS1Vk2mQLFApsU10T199s0z1n1z2l-D"
+  }
+}

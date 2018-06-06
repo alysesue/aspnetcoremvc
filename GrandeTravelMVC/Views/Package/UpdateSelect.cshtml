@@ -1,0 +1,30 @@
+﻿@model PackageUpdateSelectViewModel
+
+<div class="container" style="height:525px">
+    <div class="row">
+        <div class="col-md-12 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3 pt-5">
+                <span class="text-muted">Your packages</span>
+                <span class="badge badge-secondary badge-pill">@Model.Count</span>
+            </h4>
+            <table class="table table-light">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Price</th>
+                    <th scope="col"></th>
+                </tr>
+                @foreach (var item in Model.Packages)
+    {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Location</td>
+                <td>@item.Price</td>
+                <td class="text-right"><a class="btn btn-primary" href="@Url.Action("Update","Package", new { id = item.PackageId})">Update</a></td>
+            </tr>
+}
+            </table>
+
+        </div>
+    </div>
+</div>

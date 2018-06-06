@@ -1,0 +1,113 @@
+﻿@model HomeIndexViewModel
+
+<header class="row">
+    <div class="col">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="2500">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="carousel-content">
+                        <h1 class="display-4" style="color:white">Explore Australia your own way with exclusive luxury packages</h1>
+                        <br />
+                        <p><a class="btn btn-primary btn-lg" style="background-color:blue; border-color:blue" href="#home-first-section" role="button">Browse Destinations</a></p>
+                    </div>
+                    <img class="d-block w-100 mx-auto" src="~/images/australiabeachbikini785066.jpg" alt="First slide">
+
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-content">
+                        <h1 class="display-4" style="color:white">Explore Australia your own way with exclusive luxury packages</h1>
+                        <br />
+                        <p><a class="btn btn-primary btn-lg" style="background-color:blue; border-color:blue" href="#home-first-section" role="button">Browse Destinations</a></p>
+                    </div>
+                    <img class="d-block w-100 mx-auto" src="~/images/australiabeachbondibeach785133.jpg" alt="Second slide">
+
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-content">
+                        <h1 class="display-4" style="color:white">Explore Australia your own way with exclusive luxury packages</h1>
+                        <br />
+                        <p><a class="btn btn-primary btn-lg" style="background-color:blue; border-color:blue" href="#home-first-section" role="button">Browse Destinations</a></p>
+                    </div>
+                    <img class="d-block w-100 mx-auto" src="~/images/beachbondibeachcoast785065.jpg" alt="Third slide">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid" style="background-image: " id="home-first-section">
+
+    <br />
+    <br />
+    <h5>Escapes by City</h5>
+
+    <div class="card-deck row m-5">
+
+        @foreach (var item in Model.Locations)
+        {
+            <div class="card" style="max-width: 18rem;">
+                <a href="@Url.Action("Details","Location", new { id = item.LocationId, name = item.Name})">
+                    <img class="card-img-top" src="~/uploads/location/@item.Picture" alt="location photo">
+                    <div class="card-img-overlay">
+                        <p class="card-title text-white font-weight-bold">Explore @item.Name</p>
+                    </div>
+                </a>
+            </div>
+        }
+
+    </div>
+
+    @foreach (var item in Model.Locations)
+    {
+        <h5>Featured @item.Name Escapes</h5>
+        <div class="card-deck row m-5">
+
+            @foreach (var package in Model.Packages.Where(p => p.Location == item.Name).Take(4))
+            {
+                <div class="card" style="max-width: 18rem;">
+                    <a href="@Url.Action("Details", "Package", new { id = package.PackageId})">
+                        <img class="card-img-top" src="~/uploads/package/@package.Picture" alt="location photo">
+                        <div class="card-img-overlay">
+
+                        </div>
+                    </a>
+                    <div class="card-footer text-center bg-dark">
+                        <p class="card-title text-light font-weight-bold">@package.Name</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location
+            var sydney1 = { lat: -33.861, lng: 151.211 };
+            // The map, centered at location
+            var map = new google.maps.Map(
+                document.getElementById('map'), { zoom: 4, center: sydney1 });
+            // The marker, positioned at location
+            var marker = new google.maps.Marker({ position: sydney1, map: map });
+        }
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAog8xV_3I3tPfMnjTI7XSu1Sa-KkSouPc&callback=initMap">
+    </script>
+
+</div>
+
+
+
+
+
+
+

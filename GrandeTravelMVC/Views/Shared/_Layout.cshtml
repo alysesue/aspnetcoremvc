@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/cssversion1.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top remove-all-margin border-bottom">
+        <div class="navbar-nav mr-auto">
+            <a class="navbar-brand" href="/home/index"><img src="~/images/grandelogo.png" width="250" /></a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <div class="mx-auto order-0 input-group" style="width:50%">
+                <form asp-action="Search" asp-controller="Package" asp-antiforgery="true" method="get">
+                    <div class="input-group-append">
+                        @*<input type="text" class="form-control" name="SearchString" placeholder="Search location" aria-label="Search" aria-describedby="Search" value="@ViewData["currentFilter"]" />
+                            <input type="number" class="form-control" name="MinPrice" placeholder="Min $" aria-label="Search" aria-describedby="Search" value="@ViewData["currentFilter"]" style="width:40%" />
+                            <input type="number" class="form-control" name="MaxPrice" placeholder="Max $" aria-label="Search" aria-describedby="Search" value="@ViewData["currentFilter"]" style="width:40%" />*@
+                        <input type="text" class="form-control" name="SearchString" placeholder="Search location" aria-label="Search" aria-describedby="Search" value="@ViewData["SearchString"]" />
+                        <input type="number" class="form-control" name="MinPrice" placeholder="Min $" aria-label="Search" aria-describedby="Search" value="@ViewData["MinPrice"]" style="width:40%" />
+                        <input type="number" class="form-control" name="MaxPrice" placeholder="Max $" aria-label="Search" aria-describedby="Search" value="@ViewData["MaxPrice"]" style="width:40%" />
+                        <input type="submit" value="Search" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="btn-group">
+                            <button type="button" class="btn" style="background-color:darkcyan; border-color:darkcyan; color:white">@User.Identity.Name</button>
+                            <button type="button" class="btn dropdown-toggle dropdown-toggle-split" style="background-color:darkcyan; border-color:darkcyan; color:white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                @if (User.IsInRole("Customer"))
+                                {
+                                    <a class="dropdown-item" href="@Url.Action("UpdateCustProfile","Account")">My Profile</a>
+                                    <a class="dropdown-item" href="@Url.Action("DetailsPast","Order")">My Orders</a>
+                                }
+                                @if (User.IsInRole("Provider"))
+                                {
+                                    <a class="dropdown-item" href="@Url.Action("UpdateProvProfile","Account")">My Profile</a>
+                                    <a class="dropdown-item" href="@Url.Action("UpdateSelect","Package")">View My Packages</a>
+                                    <a class="dropdown-item" href="@Url.Action("CreateSelect","Package")">Add Package</a>
+                                }
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="@Url.Action("Logout","Account")">Log Out</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <span><a class="btn btn-primary" style="background-color:darkcyan; border-color:darkcyan" href="@Url.Action("Register","Account")" role="button">Register</a></span>
+                        <span><a class="btn btn-primary" style="background-color:darkcyan; border-color:darkcyan" href="@Url.Action("Login","Account")" role="button">Sign In</a></span>
+                    }
+                </li>
+            </ul>
+            @*<a asp-action="AddRole" asp-controller="Account">Add Role</a>*@
+        </div>
+    </nav>
+
+    <div id="body-content">
+        @RenderBody()
+    </div>
+
+
+    @*<footer class="navbar navbar-default navbar-fixed-bottom bg-light border-top mt-5" style="min-height:200px">*@
+    <footer class="navbar navbar-default bg-light border-top remove-all-margin" style="min-height:180px">
+        <div class="container">
+            <p class="navbar-text pull-left">
+                © 2018 Grande Travel
+                <ul>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Help", "Help", "Home")</li>
+                </ul>
+                <ul>
+                    <li>@Html.ActionLink("Privacy", "Privacy", "Home")</li>
+                    <li>@Html.ActionLink("Terms", "Terms", "Home")</li>
+                </ul>
+            </p>
+            <a href="https://www.facebook.com/" class="navbar-btn btn-danger btn pull-right">
+                <span class="glyphicon glyphicon-star"></span>  Facebook
+            </a>
+            <a href="https://www.instagram.com/" class="navbar-btn btn-danger btn pull-right">
+                <span class="glyphicon glyphicon-star"></span>  Instagram
+            </a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    @*<script src="~/lib/popper.js/dist/popper.js"></script>*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/javascript/customjs.js"></script>
+    @*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAog8xV_3I3tPfMnjTI7XSu1Sa-KkSouPc&callback=initMap" async defer></script>*@
+
+</body>
+</html>
+
+

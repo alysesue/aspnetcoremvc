@@ -1,0 +1,73 @@
+﻿@model PackageDetailsViewModel
+
+
+<br />
+<br />
+
+<div class="container">
+
+    <div class="row">
+        <h3>@Model.Name</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 mb-5 mt-5 mr-5">
+            <img src="~/uploads/package/@Model.Picture" alt="Package Picture" style="width:100%" /> @*style="width:600px*@
+        </div>
+
+        <div class="col mb-5 mt-5 ml-5 text-left">
+            @*@if (User.IsInRole("Provider"))
+        {
+            <a class="btn btn-primary mb-5" style="width:100%" href="@Url.Action("Update","Package", new { id = Model.PackageId})">Update Package</a>
+        }*@
+            @if (User.IsInRole("Customer"))
+    {
+        @*<a class="btn btn-primary mb-5" style="width:100%" href="@Url.Action("Create","Order", new { packageId = Model.PackageId})">Order Package</a>*@
+        <a class="btn btn-primary mb-5" style="width:100%" href="@Url.Action("Create","Order")">Order Package</a>
+}
+        @*<a class="btn btn-primary" href="@Url.Action("Create", "Order", new { id = Model.PackageId})">See More</a>*@
+            <div class="border-top border-bottom pt-3">
+                <p class="font-weight-bold">Description</p>
+                <p class="border-bottom pb-3">@Model.Description</p>
+                <p class="font-weight-bold">Price</p>
+                <p>@Model.Price</p>
+                <p class="font-weight-bold">Location</p>
+                <p>@Model.Location</p>
+
+
+                @if (@Model.IsAvailable == true)
+        {
+            <p class="font-weight-bold font-italic">Package Available</p>
+}
+else if (@Model.IsAvailable == false)
+{
+        <p class="font-weight-bold font-italic">Package Currently Unavailable</p>
+}
+
+            </div>
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <h5>Feedback</h5>
+
+    <div class="row mt-3">
+        <div class="col-md-8">
+            @if (Model.Feedbacks.Count() == 0)
+            {
+                <p>There is currently no feedback to view</p>
+            }
+            else if (Model.Feedbacks.Count() > 0)
+            {
+                @foreach (var item in Model.Feedbacks)
+                {
+                    <div class="border-top border-bottom">
+                        <span class="p-4">@item.Rating</span>
+                        <span class="p-5">@item.Description</span>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+</div>

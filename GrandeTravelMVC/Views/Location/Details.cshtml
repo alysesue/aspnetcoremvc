@@ -1,0 +1,42 @@
+﻿@model LocationDetailsViewModel
+
+<div class="container">
+
+    <div class="row pt-5">
+
+        <h1>@Model.Name</h1>
+
+    </div>
+
+    <div class="row pt-5 pb-5">
+
+        <div class="col-md-6">
+            <p>@Model.Description</p>
+        </div>
+
+        <div class="col-md-6">
+            <img src="~/uploads/location/@Model.Picture" alt="Location Picture" style="width:100%" />
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        @foreach (var item in Model.Packages.Where(p => p.IsAvailable == true))
+        {
+            <div class="col-md-6">
+                <div class="card mt-5 mb" style="max-width: 35em; height:42em">
+                    <img class="card-img-top" src="~/uploads/package/@item.Picture" alt="Package Picture">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a class="btn btn-primary" href="@Url.Action("Details", "Package", new { id = item.PackageId})">See More</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,63 @@
+﻿@model PackageCreateViewModel
+
+<div class="bg-light pb-5">
+
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Add package</h2>
+            <p class="lead">Please enter package details below</p>
+        </div>
+
+        <div class="row mx-auto" style="width:80%">
+            <div class="col-md-12 order-md-1">
+                <h4 class="mb-3">Package details</h4>
+                <form asp-controller="Package" asp-action="Create" method="Post" asp-antiforgery="true" enctype="multipart/form-data">
+
+                    <div asp-validation-summary="ModelOnly">
+
+                    </div>
+
+                    <div>
+                        <input hidden="hidden" asp-for="LocationId" />
+                    </div>
+
+                    <div>
+                        <input hidden="hidden" asp-for="LocationName" />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PackageName">Package name</label>
+                            <input type="text" class="form-control" asp-for="PackageName">
+                            <span style="color:red" asp-validation-for="PackageName"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Price"></label>
+                            <input type="number" class="form-control" asp-for="Price">
+                            <span style="color:red" asp-validation-for="Price"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description"></label>
+                        <textarea class="form-control" rows="3" asp-for="Description"></textarea>
+                        <span style="color:red" asp-validation-for="Description"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Picture">Package Picture</label>
+                        <input class="form-control" type="file" name="file" />
+                        <span style="color:red" asp-validation-for="Picture"></span>
+                    </div>
+
+                    <hr class="mb-4">
+
+                    <button class="btn btn-primary" style="background-color:darkcyan; border-color:darkcyan" type="submit">Add</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

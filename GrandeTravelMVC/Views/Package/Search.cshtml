@@ -1,0 +1,58 @@
+﻿@model PackageSearchViewModel
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-4">
+            <form asp-controller="Package" asp-action="Search" asp-antiforgery="true" method="get">
+
+                <div asp-validation-summary="ModelOnly">
+
+                </div>
+
+                <label class="sr-only" asp-for="SearchString">Location</label>
+                <input class="form-control" type="text" value="@ViewData["currentFilter"]" />
+                <span style="color:red" asp-validation-for="SearchString"></span>
+
+                <label class="sr-only" asp-for="MinPrice">Minimum Price</label>
+                <input class="form-control" type="number" asp-for="MinPrice" />
+                <span style="color:red" asp-validation-for="MinPrice"></span>
+
+                <label class="sr-only" asp-for="MaxPrice">Maximum Price</label>
+                <input class="form-control" type="number" asp-for="MaxPrice" />
+                <span style="color:red" asp-validation-for="MaxPrice"></span>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+            </form>
+
+        </div>
+
+        <div class="col">
+            <p>Total Packages Found: @Model.Total</p>
+
+            @foreach (var item in Model.Packages)
+            {
+                <div class="card" style="max-width: 80rem;">
+                    <img class="card-img-top" src="~/uploads/package/@item.Picture" alt="Photo of sunset">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Location</p>
+                        <p class="card-text">@item.Price</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a class="btn btn-primary" href="@Url.Action("Details", "Package", new { id = item.PackageId})">See More</a>
+                    </div>
+                </div>
+            }
+
+            <div>
+                <h5 style="color:red">@ViewBag.PackageSearch</h5>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+

@@ -1,0 +1,34 @@
+﻿@model FeedbackCreateViewModel
+
+<p>Package Name: @Model.Name</p>
+<p>Location: @Model.Location</p>
+<p>Description: @Model.Description</p>
+
+
+<form asp-controller="Package" asp-action="Feedback" asp-antiforgery="true" method="Post">
+
+    <div asp-validation-summary="ModelOnly">
+
+    </div>
+
+    <div>
+        <input hidden="hidden" asp-for="PackageId" />
+    </div>
+
+    <div>
+        <label asp-for="Rating"></label>
+        <input asp-for="Rating" />
+        <span style="color:red" asp-validation-for="Rating"></span>
+    </div>
+
+    <div>
+        <label asp-for="FDescription"></label>
+        <input asp-for="FDescription" />
+        <span style="color:red" asp-validation-for="FDescription"></span>
+    </div>
+
+    <div>
+        <input type="submit" value="Submit Feedback" />
+    </div>
+
+</form>

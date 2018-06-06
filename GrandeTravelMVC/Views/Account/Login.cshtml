@@ -1,0 +1,28 @@
+﻿@model AccountLoginViewModel
+
+<div class="text-center bg-light" style="height:525px">
+    <form class="form-signin-register" asp-controller="Account" asp-action="Login" asp-route-returnurl="@Model.ReturnUrl" asp-antiforgery="true" method="Post">
+
+        <div asp-validation-summary="ModelOnly">
+
+        </div>
+
+        <h1 class="h3 mb-3 font-weight-bold pt-5">Please sign in</h1>
+        <label class="sr-only" asp-for="UserName"></label>
+        <input class="form-control" type="email" placeholder="Email address" autofocus="" asp-for="UserName" />
+        <span style="color:red" asp-validation-for="UserName"></span>
+
+        <label class="sr-only" asp-for="Password"></label>
+        <input class="form-control form-signin-password" type="password" placeholder="Password" asp-for="Password" />
+        <span style="color:red" asp-validation-for="Password"></span>
+
+        <input asp-for="RememberMe">
+        <label class="checkbox" asp-for="RememberMe"></label>
+        <span style="color:red" asp-validation-for="RememberMe"></span>
+
+        <button class="btn btn-lg btn-primary btn-block" style="background-color:darkcyan; border-color:darkcyan" type="submit">Sign in</button>
+
+    </form>
+</div>
+
+

@@ -1,0 +1,76 @@
+﻿@model AccountUpdateProvProfileViewModel
+
+<div class="bg-light pb-5">
+
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Update profile</h2>
+            <p class="lead">Please update your details below</p>
+        </div>
+
+        <div class="row mx-auto" style="width:80%">
+            <div class="col-md-10 order-md-1">
+                <h4 class="mb-3">Your details</h4>
+                <form asp-controller="Account" asp-action="UpdateProvProfile" method="Post" asp-antiforgery="true" enctype="multipart/form-data">
+
+                    <div asp-validation-summary="ModelOnly">
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="CompanyName">Company name</label>
+                            <input type="text" class="form-control" asp-for="CompanyName">
+                            <span style="color:red" asp-validation-for="CompanyName"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Website"></label>
+                            <input type="text" class="form-control" asp-for="Website">
+                            <span style="color:red" asp-validation-for="Website"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Phone"></label>
+                        <input type="text" class="form-control" asp-for="Phone">
+                        <span style="color:red" asp-validation-for="Phone"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Address"></label>
+                        <input type="text" class="form-control" asp-for="Address">
+                        <span style="color:red" asp-validation-for="Address"></span>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label asp-for="CompanyLogo">Company Logo</label>
+                        <input class="form-control" type="file" name="file" />
+                        <span style="color:red" asp-validation-for="CompanyLogo"></span>
+                    </div>
+
+                    <hr class="mb-4">
+
+                    <button class="btn btn-primary" style="background-color:darkcyan; border-color:darkcyan" type="submit">Update</button>
+                </form>
+            </div>
+            <div class="col-md-2 order-md-1">
+                <div class="mx-auto mt-4">
+                    <img src="~/uploads/provprofile/@Model.CompanyLogo" alt="Company logo" style="height:100px" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
