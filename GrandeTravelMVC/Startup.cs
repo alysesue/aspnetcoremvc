@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using GrandeTravelMVC.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace GrandeTravelMVC
 {
@@ -42,6 +43,13 @@ namespace GrandeTravelMVC
             services.AddDbContext<MyDbContext>();
 
             services.ConfigureApplicationCookie(options => { options.AccessDeniedPath = "/Account/Denied"; });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "{authorisationserveraddress}";
+                    options.Audience = "{audience}";
+                });     
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +61,6 @@ namespace GrandeTravelMVC
             }
 
             app.UseStaticFiles();
-            //app.UseIdentity();
             app.UseAuthentication();
             app.UseCors(builder=>builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseMvcWithDefaultRoute();
