@@ -10,6 +10,7 @@ namespace GrandeTravelMVC.ViewModels
     {
         [Required]
         [MaxLength(256)]
+        [DataType(DataType.EmailAddress, ErrorMessage = "User name must be an email")]
         public string UserName { get; set; }
 
         [Required]

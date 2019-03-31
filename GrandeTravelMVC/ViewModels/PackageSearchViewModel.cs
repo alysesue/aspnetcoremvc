@@ -13,7 +13,6 @@ namespace GrandeTravelMVC.ViewModels
         public int Total { get; set; }
         public IEnumerable<Package> Packages { get; set; }
 
-        [Required]
         public string SearchString { get; set; }
         public int? MinPrice { get; set; }
         public int? MaxPrice { get; set; }

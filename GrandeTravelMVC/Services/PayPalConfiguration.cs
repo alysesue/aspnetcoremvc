@@ -24,8 +24,8 @@ namespace GrandeTravelMVC.Services
         {
             // ConfigManager.Instance.GetProperties(); // it doesn't work on ASPNET 5
             return new Dictionary<string, string>() {
-                { "clientId", "AUASNhD7YM7dc5Wmc5YE9pEsC0o4eVOyYWO9ezXWBu2XTc63d3Au_s9c-v-U" },
-                { "clientSecret", "EBq0TRAE-4R9kgCDKzVh09sm1TeNcuY-xJirid7LNtheUh5t5vlOhR0XSHt3" }
+                { "clientId", "xxx" },
+                { "clientSecret", "xxx" }
             };
         }
 

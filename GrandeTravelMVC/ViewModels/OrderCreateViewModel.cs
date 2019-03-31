@@ -21,6 +21,7 @@ namespace GrandeTravelMVC.ViewModels
         public string Picture { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Quantity must be at least 1")]
         public int Quantity { get; set; }
 
         public double TotalPrice { get; set; }

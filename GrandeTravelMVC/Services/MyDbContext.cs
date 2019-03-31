@@ -19,7 +19,7 @@ namespace GrandeTravelMVC.Services
 
         protected override void OnConfiguring(DbContextOptionsBuilder option)
         {
-            option.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB ; Database=DemoDB; Trusted_Connection=True");
+            option.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB ; Database=TravelDB; Trusted_Connection=True");
         }
     }
 }

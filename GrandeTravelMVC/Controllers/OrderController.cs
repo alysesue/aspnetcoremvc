@@ -40,6 +40,7 @@ namespace GrandeTravelMVC.Controllers
             {
                 PackageId = package.PackageId,
                 Name = package.Name,
+                Quantity = 1,
                 Location = package.Location,
                 Price = package.Price,
                 Description = package.Description,
@@ -69,36 +70,19 @@ namespace GrandeTravelMVC.Controllers
                 };
                 _orderDataService.Create(order);
 
-                //create email
-                //var msg = new SendGridMessage();
-
-                //msg.SetFrom(new EmailAddress("alyse.sue@gmail.com", "Grande Travel"));
-
-                //var recipients = new List<EmailAddress>
-                //{
-                //    new EmailAddress("alyse.sue@genomix.co", "Alyse Sue"),
-                //    new EmailAddress("riselongevity@gmail.com", "Rise Long")
-                //};
-                //msg.AddTos(recipients);
-
-                //msg.SetSubject("Order Confirmation - Grande Travel");
-
-                //msg.AddContent(MimeType.Text, "Hello World plain text!");
-                //msg.AddContent(MimeType.Html, "<p>Hello World!</p>");
-
                 //send email
-                var apiKey = ("");
-                var client = new SendGridClient(apiKey);
-                var from = new EmailAddress("alyse.sue@gmail.com", "Alyse Sue");
-                var subject = "Order confirmation: Grande Travel";
-                var to = new EmailAddress("alyse.sue@gmail.com", "Alyse Sue");
-                var plainTextContent = "and easy to do anywhere, even with C#";
-                var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
-                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-                var bytes = System.IO.File.ReadAllBytes("GrandeTravelMVC/wwwroot/attachments/voucher.txt");
-                var file = Convert.ToBase64String(bytes);
-                msg.AddAttachment("voucher.txt", file);
-                var response = await client.SendEmailAsync(msg);
+                //var apiKey = ("xxxxxxx");
+                //var client = new SendGridClient(apiKey);
+                //var from = new EmailAddress("someone1@email.com", "Jane Smith");
+                //var subject = "Order confirmation: Grande Travel";
+                //var to = new EmailAddress("someone2@email.com", "John Brown");
+                //var plainTextContent = "Thanks for booking with us!";
+                //var htmlContent = "<strong>Safe travels</strong>";
+                //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                //var bytes = System.IO.File.ReadAllBytes("GrandeTravelMVC/wwwroot/attachments/voucher.txt");
+                //var file = Convert.ToBase64String(bytes);
+                //msg.AddAttachment("voucher.txt", file);
+                //var response = await client.SendEmailAsync(msg);
 
                 return RedirectToAction("Details", "Order", new { id = order.OrderId });
             }
@@ -142,24 +126,5 @@ namespace GrandeTravelMVC.Controllers
 
             return View(vm);
         }
-
-        //private static void Main()
-        //{
-        //    Execute().Wait();
-        //}
-
-        //static async Task Execute()
-        //{
-        //    var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
-        //    var client = new SendGridClient(apiKey);
-        //    var from = new EmailAddress("alyse.sue@gmail.com", "Grande Provider");
-        //    var subject = "Sending with SendGrid is Fun";
-        //    var to = new EmailAddress("alyse.sue@gmail.com", "Grande Customer");
-        //    var plainTextContent = "and easy to do anywhere, even with C#";
-        //    var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
-        //    var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-        //    var response = await client.SendEmailAsync(msg);
-        //}
-
     }
 }

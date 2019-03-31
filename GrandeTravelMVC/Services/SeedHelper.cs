@@ -44,14 +44,14 @@ namespace GrandeTravelMVC.Services
                 if (await userManager.FindByNameAsync("admin@admin.com") == null)
                 {
                     IdentityUser admin = new IdentityUser("admin@admin.com");
-                    await userManager.CreateAsync(admin, "orange1111");
+                    await userManager.CreateAsync(admin, "somePassword");
                     await userManager.AddToRoleAsync(admin, "Admin");
                 }
 
                 if (await userManager.FindByNameAsync("provider@provider.com") == null)
                 {
                     IdentityUser identity = new IdentityUser("provider@provider.com");
-                    await userManager.CreateAsync(identity, "orange1111");
+                    await userManager.CreateAsync(identity, "somePassword");
                     await userManager.AddToRoleAsync(identity, "Provider");
 
                     ProviderProfile profile = new ProviderProfile
@@ -76,7 +76,7 @@ namespace GrandeTravelMVC.Services
                 if (await userManager.FindByNameAsync("customer@customer.com") == null)
                 {
                     IdentityUser identity = new IdentityUser("customer@customer.com");
-                    await userManager.CreateAsync(identity, "orange1111");
+                    await userManager.CreateAsync(identity, "somePassword");
                     await userManager.AddToRoleAsync(identity, "Customer");
 
                     CustomerProfile profile = new CustomerProfile

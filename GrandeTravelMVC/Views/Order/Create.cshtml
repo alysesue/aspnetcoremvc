@@ -1,53 +1,41 @@
 ﻿@model OrderCreateViewModel
 
-<p>Package Name: @Model.Name</p>
-<p>Location: @Model.Location</p>
-<p>Price: @Model.Price</p>
-<p>Description: @Model.Description</p>
-<p><img src="~/uploads/custprofile/@Model.Picture" alt="Package Picture" /></p>
-
 <div class="bg-light pb-5">
 
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Create order</h2>
-            <p class="lead">Please enter your details below</p>
+            <h2>Order package</h2>
+            <p class="lead">Please fill in the form and review details</p>
         </div>
 
         <div class="row mx-auto" style="width:80%">
-            <div class="col-md-10 order-md-1">
-                <h4 class="mb-3">Your details</h4>
+            <div class="col-md-6 order-md-1">
+                <h4 class="mb-3">Order details</h4>
                 <form asp-controller="Order" asp-action="Create" asp-antiforgery="true" method="Post" enctype="multipart/form-data">
 
                     <div asp-validation-summary="ModelOnly">
 
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label asp-for="PackageId">Package Id</label>
-                            <input type="text" class="form-control" asp-for="PackageId" readonly>
-                            <span style="color:red" asp-validation-for="PackageId"></span>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label asp-for="Price"></label>
-                            <input type="text" class="form-control" asp-for="Price" readonly>
-                            <span style="color:red" asp-validation-for="Price"></span>
-                        </div>
+                    <div>
+                        <input hidden="hidden" asp-for="PackageId" />
+                    </div>
+
+                    <div>
+                        <input hidden="hidden" asp-for="Name" />
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="TotalPrice">Total Price</label>
-                        <input type="text" class="form-control" asp-for="TotalPrice" readonly>
-                        <span style="color:red" asp-validation-for="TotalPrice"></span>
+                        <label asp-for="Price">Price Per Person</label>
+                        <input type="text" class="form-control" asp-for="Price" readonly>
+                        <span style="color:red" asp-validation-for="Price"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Name"></label>
+                        <label asp-for="Name">Package Name</label>
                         <input type="text" class="form-control" asp-for="Name" readonly>
                         <span style="color:red" asp-validation-for="Name"></span>
                     </div>
-
 
                     <div class="mb-3">
                         <label asp-for="Quantity"></label>
@@ -60,9 +48,17 @@
                     <button class="btn btn-primary" style="background-color:darkcyan; border-color:darkcyan" type="submit">Order</button>
                 </form>
             </div>
-            <div class="col-md-2 order-md-1">
+            <div class="col-md-6 order-md-1">
                 <div class="mx-auto mt-4">
-                    <img src="~/uploads/custprofile/@Model.Picture" alt="Profile Picture" style="height:100px" />
+                    <img src="~/uploads/package/@Model.Picture" alt="Package Picture" style="width:100%" /> @*style="width:600px*@
+                </div>
+                <div>
+                    <p class="font-weight-bold">Location</p>
+                    <p>@Model.Location</p>
+                </div>
+                <div>
+                    <p class="font-weight-bold">Description</p>
+                    <p>@Model.Description</p>
                 </div>
             </div>
         </div>

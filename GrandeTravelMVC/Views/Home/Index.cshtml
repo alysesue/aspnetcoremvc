@@ -3,40 +3,37 @@
 <header class="row">
     <div class="col">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="2500">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="carousel-content">
-                        <h1 class="display-4" style="color:white">Explore Australia your own way with exclusive luxury packages</h1>
-                        <br />
-                        <p><a class="btn btn-primary btn-lg" style="background-color:blue; border-color:blue" href="#home-first-section" role="button">Browse Destinations</a></p>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="carousel-caption d-none d-md-block text-left" style="bottom:600px">
+                            <h1 class="display-4" style="color:white">Explore Australia your own way with exclusive luxury packages</h1>
+                            <br />
+                            <p><a class="btn btn-primary btn-lg" style="background-color:blue; border-color:blue" href="#home-first-section" role="button">Browse Destinations</a></p>
+                        </div>
+                        <img class="d-block w-100 mx-auto" src="~/images/australiabeachbikini785066.jpg" alt="First slide">
                     </div>
-                    <img class="d-block w-100 mx-auto" src="~/images/australiabeachbikini785066.jpg" alt="First slide">
-
-                </div>
-                <div class="carousel-item">
-                    <div class="carousel-content">
-                        <h1 class="display-4" style="color:white">Explore Australia your own way with exclusive luxury packages</h1>
-                        <br />
-                        <p><a class="btn btn-primary btn-lg" style="background-color:blue; border-color:blue" href="#home-first-section" role="button">Browse Destinations</a></p>
+                    <div class="carousel-item">
+                        <div class="carousel-caption d-none d-md-block text-left" style="bottom:600px">
+                            <h1 class="display-4" style="color:white">Explore Australia your own way with exclusive luxury packages</h1>
+                            <br />
+                            <p><a class="btn btn-primary btn-lg" style="background-color:blue; border-color:blue" href="#home-first-section" role="button">Browse Destinations</a></p>
+                        </div>
+                        <img class="d-block w-100 mx-auto" src="~/images/australiabeachbondibeach785133.jpg" alt="Second slide">
                     </div>
-                    <img class="d-block w-100 mx-auto" src="~/images/australiabeachbondibeach785133.jpg" alt="Second slide">
-
-                </div>
-                <div class="carousel-item">
-                    <div class="carousel-content">
-                        <h1 class="display-4" style="color:white">Explore Australia your own way with exclusive luxury packages</h1>
-                        <br />
-                        <p><a class="btn btn-primary btn-lg" style="background-color:blue; border-color:blue" href="#home-first-section" role="button">Browse Destinations</a></p>
+                    <div class="carousel-item">
+                        <div class="carousel-caption d-none d-md-block text-left" style="bottom:600px">
+                            <h1 class="display-4" style="color:white">Explore Australia your own way with exclusive luxury packages</h1>
+                            <br />
+                            <p><a class="btn btn-primary btn-lg" style="background-color:blue; border-color:blue" href="#home-first-section" role="button">Browse Destinations</a></p>
+                        </div>
+                        <img class="d-block w-100 mx-auto" src="~/images/beachbondibeachcoast785065.jpg" alt="Third slide">
                     </div>
-                    <img class="d-block w-100 mx-auto" src="~/images/beachbondibeachcoast785065.jpg" alt="Third slide">
-
                 </div>
             </div>
-        </div>
     </div>
 </header>
 
-<div class="container-fluid" style="background-image: " id="home-first-section">
+<div class="container-fluid" id="home-first-section">
 
     <br />
     <br />
@@ -47,12 +44,15 @@
         @foreach (var item in Model.Locations)
         {
             <div class="card" style="max-width: 18rem;">
-                <a href="@Url.Action("Details","Location", new { id = item.LocationId, name = item.Name})">
+                <a href="@Url.Action("Details", "Location", new { id = item.LocationId })">
                     <img class="card-img-top" src="~/uploads/location/@item.Picture" alt="location photo">
                     <div class="card-img-overlay">
-                        <p class="card-title text-white font-weight-bold">Explore @item.Name</p>
+
                     </div>
                 </a>
+                <div class="card-footer text-center bg-dark">
+                    <p class="card-title text-light font-weight-bold">@item.Name</p>
+                </div>
             </div>
         }
 
@@ -63,7 +63,7 @@
         <h5>Featured @item.Name Escapes</h5>
         <div class="card-deck row m-5">
 
-            @foreach (var package in Model.Packages.Where(p => p.Location == item.Name).Take(4))
+            @foreach (var package in Model.Packages.Where(p => p.Location == item.Name && p.IsAvailable == true).Take(4))
             {
                 <div class="card" style="max-width: 18rem;">
                     <a href="@Url.Action("Details", "Package", new { id = package.PackageId})">
@@ -100,7 +100,7 @@
     * The callback parameter executes the initMap() function
     -->
     <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=apikey&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAog8xV_3I3tPfMnjTI7XSu1Sa-KkSouPc&callback=initMap">
     </script>
 
 </div>

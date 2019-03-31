@@ -222,18 +222,17 @@ namespace GrandeTravelMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Package package = new Package
-                {
-                    PackageId = vm.PackageId,
-                    Name = vm.PackageName,
-                    Location = vm.LocationName,
-                    //Location = vm.LocationList.SelectedValue.ToString(),
-                    Price = vm.Price,
-                    Description = vm.Description,
-                    IsAvailable = vm.IsAvailable,
-                    LocationId = vm.LocationId,
-                    UserId = vm.UserId
-                };
+                Package package = _packageDataService.GetSingle(p => p.PackageId == vm.PackageId);
+
+                package.PackageId = vm.PackageId;
+                package.Name = vm.PackageName;
+                package.Location = vm.LocationName;
+                //package.Location = vm.LocationList.SelectedValue.ToString(),
+                package.Price = vm.Price;
+                package.Description = vm.Description;
+                package.IsAvailable = vm.IsAvailable;
+                package.LocationId = vm.LocationId;
+                package.UserId = vm.UserId;
 
                 if (file != null)
                 {
@@ -282,34 +281,53 @@ namespace GrandeTravelMVC.Controllers
         [HttpGet]
         public IActionResult Search(PackageSearchViewModel vm)
         {
-            IEnumerable<Package> packageList = vm.Packages;
+            IEnumerable<Package> packageList;
 
             if (vm != null)
             {
                 if (!string.IsNullOrEmpty(vm.SearchString))
                 {
-                    packageList = _packageDataService.Query(p => p.Location == vm.SearchString && p.IsAvailable == true);
-                    vm.Total = packageList.Count();
+                    packageList = _packageDataService.Query(p => p.Location.Contains(vm.SearchString) && p.IsAvailable == true);
+
+                    if (vm.MinPrice.HasValue && vm.MaxPrice.HasValue)
+                    {
+                        packageList = packageList.Where(p => p.Price <= vm.MaxPrice && p.Price >= vm.MinPrice);
+                    }
+                    else if (!vm.MinPrice.HasValue && vm.MaxPrice.HasValue)
+                    {
+                        packageList = packageList.Where(p => p.Price <= vm.MaxPrice);
+                    }
+                    else if (vm.MinPrice.HasValue && !vm.MaxPrice.HasValue)
+                    {
+                        packageList = packageList.Where(p => p.Price >= vm.MinPrice);
+                    }
                     vm.Packages = packageList;
-                }
-                if (vm.MinPrice.HasValue)
+                    vm.Total = packageList.Count();
+                }     
+                else if (string.IsNullOrEmpty(vm.SearchString) && (vm.MinPrice.HasValue || vm.MaxPrice.HasValue))
                 {
-                    packageList = packageList.Where(p => p.Price >= vm.MinPrice && p.IsAvailable == true);
-                    vm.Total = packageList.Count();
+                    if (vm.MinPrice.HasValue && vm.MaxPrice.HasValue)
+                    {
+                        packageList = _packageDataService.Query(p => p.Price <= vm.MaxPrice && p.Price >= vm.MinPrice && p.IsAvailable == true);
+                    }
+                    else if (!vm.MinPrice.HasValue && vm.MaxPrice.HasValue)
+                    {
+                        packageList = _packageDataService.Query(p => p.Price <= vm.MaxPrice && p.IsAvailable == true);
+                    }
+                    else
+                    {
+                        packageList = _packageDataService.Query(p => p.Price >= vm.MinPrice && p.IsAvailable == true);
+                    }
                     vm.Packages = packageList;
+                    vm.Total = packageList.Count();
                 }
-                if (vm.MaxPrice.HasValue)
+                else
                 {
-                    packageList = packageList.Where(p => p.Price <= vm.MaxPrice && p.IsAvailable == true);
-                    vm.Total = packageList.Count();
-                    vm.Packages = packageList;
+                    ViewBag.PackageSearch = "No packages available. Please try another location or price";
                 }
+                return View(vm);
             }
-            else
-            {
-                ViewBag.PackageSearch = "No packages available. Please try another location or price";
-            }
-            return View(vm);
+            return View();
         }
 
         [HttpGet]

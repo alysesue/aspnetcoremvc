@@ -1,35 +1,82 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Web.Http;
+using GrandeTravelMVC.ViewModels;
 
 namespace GrandeTravelMVC.Controllers.Api
 {
-    public class AccountApiController : Controller
+    [RoutePrefix("api/Account")]
+    public class AccountController : ApiController
     {
-        //[HttpGet("api/packagegetall")]
-        //public JsonResult GetAllPackages()
-        //{
-        //    try
-        //    {
-        //        IEnumerable<Package> packageList = _packageDataService.GetAll();
-        //        return Json(packageList);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Response.StatusCode = (int)HttpStatusCode.BadRequest;
-        //        return Json(new { message = e.Message });
-        //    }
-        //}
+        private AuthRepository _repo = null;
 
-        
-        public string Protected()
+        public AccountController()
         {
-            return "Only if you have a valid token";
+            _repo = new AuthRepository();
         }
 
+        // POST api/Account/Register
+        [AllowAnonymous]
+        [Route("Register")]
+        public async Task<IHttpActionResult> Register(AccountRegisterViewModel userModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await _repo.RegisterUser(userModel);
+
+            IHttpActionResult errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _repo.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
+
+        private IHttpActionResult GetErrorResult(IdentityResult result)
+        {
+            if (result == null)
+            {
+                return InternalServerError();
+            }
+
+            if (!result.Succeeded)
+            {
+                if (result.Errors != null)
+                {
+                    foreach (string error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+                }
+
+                if (ModelState.IsValid)
+                {
+                    // No ModelState errors are available to send, so just return an empty BadRequest.
+                    return BadRequest();
+                }
+
+                return BadRequest(ModelState);
+            }
+
+            return null;
+        }
     }
 }

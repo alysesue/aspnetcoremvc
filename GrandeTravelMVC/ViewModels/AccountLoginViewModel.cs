@@ -9,6 +9,7 @@ namespace GrandeTravelMVC.ViewModels
     public class AccountLoginViewModel
     {
         [Required]
+        [DataType(DataType.EmailAddress, ErrorMessage = "User name must be an email")]
         public string UserName { get; set; }
 
         [Required]

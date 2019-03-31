@@ -15,8 +15,8 @@ namespace GrandeTravelMVC.Services
         public static string SendSMSGet()
         {
             String result;
-            string apiKey = "2jLVmAQhiDo-GJq2zseRHrnmQXO3UtAYp5qQeCB7Hu";
-            string numbers = "+61405838333"; // in a comma seperated list
+            string apiKey = "xxx";
+            string numbers = "+61xx"; // in a comma seperated list
             string message = "Thanks for creating an account with Grande Travel";
             string sender = "Grande Travel";
 
@@ -61,8 +61,8 @@ namespace GrandeTravelMVC.Services
             {
                 byte[] response = wb.UploadValues("https://api.txtlocal.com/send/", new NameValueCollection()
                 {
-                {"apikey" , "2jLVmAQhiDo-GJq2zseRHrnmQXO3UtAYp5qQeCB7Hu"},
-                {"numbers" , "+61405838333"},
+                {"apikey" , "xxx"},
+                {"numbers" , "+61xxx"},
                 {"message" , message},
                 {"sender" , "Grande Travel"}
                 });

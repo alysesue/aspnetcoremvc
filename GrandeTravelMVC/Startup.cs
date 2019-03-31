@@ -10,11 +10,44 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using GrandeTravelMVC.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Owin;
+using Owin;
+using System.Web.Http;
+using Microsoft.Owin.Security.OAuth;
 
+[assembly: OwinStartup(typeof(GrandeTravelMVC.Startup))]
 namespace GrandeTravelMVC
 {
     public class Startup
     {
+        public void Configuration(IAppBuilder app)
+        {
+            HttpConfiguration config = new HttpConfiguration();
+
+            ConfigureOAuth(app);
+
+            WebApiConfig.Register(config);
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            app.UseWebApi(config);
+
+        }
+
+        public void ConfigureOAuth(IAppBuilder app)
+        {
+            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            {
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new Microsoft.Owin.PathString("/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                Provider = new SimpleAuthorizationServerProvider()
+            };
+
+            // Token Generation
+            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -42,14 +75,7 @@ namespace GrandeTravelMVC
 
             services.AddDbContext<MyDbContext>();
 
-            services.ConfigureApplicationCookie(options => { options.AccessDeniedPath = "/Account/Denied"; });
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = "{authorisationserveraddress}";
-                    options.Audience = "{audience}";
-                });     
+            services.ConfigureApplicationCookie(options => { options.AccessDeniedPath = "/Account/Denied"; });   
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

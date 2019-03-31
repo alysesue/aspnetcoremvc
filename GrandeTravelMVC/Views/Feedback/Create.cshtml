@@ -1,34 +1,60 @@
 ﻿@model FeedbackCreateViewModel
 
-<p>Package Name: @Model.Name</p>
-<p>Location: @Model.Location</p>
-<p>Description: @Model.Description</p>
+<div class="bg-light pb-5">
 
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Leave feedback</h2>
+            <p class="lead">Provide your feedback below</p>
+        </div>
 
-<form asp-controller="Package" asp-action="Feedback" asp-antiforgery="true" method="Post">
+        <div class="row mx-auto" style="width:80%">
+            <div class="col-md-6 order-md-1">
+                <div>
+                    <p class="font-weight-bold">Package Name</p>
+                    <p>@Model.Name</p>
+                </div>
+                <div>
+                    <p class="font-weight-bold">Location</p>
+                    <p>@Model.Location</p>
+                </div>
+                <div>
+                    <p class="font-weight-bold">Description</p>
+                    <p>@Model.Description</p>
+                </div>
+            </div>
+            <div class="col-md-6 order-md-1">
+                <h4 class="mb-3">Feedback</h4>
+                <form asp-controller="Feedback" asp-action="Create" asp-antiforgery="true" method="Post">
 
-    <div asp-validation-summary="ModelOnly">
+                    <div asp-validation-summary="ModelOnly">
+
+                    </div>
+
+                    <div>
+                        <input hidden="hidden" asp-for="PackageId" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Rating">Rating (1 to 5)</label>
+                        <input type="number" class="form-control" asp-for="Rating">
+                        <span style="color:red" asp-validation-for="Rating"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="FDescription">Your feedback</label>
+                        <textarea class="form-control" rows="3" asp-for="FDescription"></textarea>
+                        <span style="color:red" asp-validation-for="FDescription"></span>
+                    </div>
+
+                    <hr class="mb-4">
+
+                    <button class="btn btn-primary" style="background-color:darkcyan; border-color:darkcyan" type="submit">Submit</button>
+                </form>
+            </div>
+
+        </div>
 
     </div>
 
-    <div>
-        <input hidden="hidden" asp-for="PackageId" />
-    </div>
-
-    <div>
-        <label asp-for="Rating"></label>
-        <input asp-for="Rating" />
-        <span style="color:red" asp-validation-for="Rating"></span>
-    </div>
-
-    <div>
-        <label asp-for="FDescription"></label>
-        <input asp-for="FDescription" />
-        <span style="color:red" asp-validation-for="FDescription"></span>
-    </div>
-
-    <div>
-        <input type="submit" value="Submit Feedback" />
-    </div>
-
-</form>
+</div>

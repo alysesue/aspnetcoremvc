@@ -11,21 +11,21 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8 mb-5 mt-5 mr-5">
+        <div class="col-md-8 mb-5 mt-5">
             <img src="~/uploads/package/@Model.Picture" alt="Package Picture" style="width:100%" /> @*style="width:600px*@
         </div>
 
-        <div class="col mb-5 mt-5 ml-5 text-left">
+        <div class="col mb-5 mt-5 text-left">
             @*@if (User.IsInRole("Provider"))
-        {
-            <a class="btn btn-primary mb-5" style="width:100%" href="@Url.Action("Update","Package", new { id = Model.PackageId})">Update Package</a>
-        }*@
+                {
+                    <a class="btn btn-primary mb-5" style="width:100%" href="@Url.Action("Update","Package", new { id = Model.PackageId})">Update Package</a>
+                }*@
             @if (User.IsInRole("Customer"))
-    {
-        @*<a class="btn btn-primary mb-5" style="width:100%" href="@Url.Action("Create","Order", new { packageId = Model.PackageId})">Order Package</a>*@
-        <a class="btn btn-primary mb-5" style="width:100%" href="@Url.Action("Create","Order")">Order Package</a>
-}
-        @*<a class="btn btn-primary" href="@Url.Action("Create", "Order", new { id = Model.PackageId})">See More</a>*@
+            {
+                @*<a class="btn btn-primary mb-5" style="width:100%" href="@Url.Action("Create","Order", new { packageId = Model.PackageId})">Order Package</a>*@
+                <a class="btn btn-primary mb-5" style="width:100%" href="@Url.Action("Create","Order")">Order Package</a>
+            }
+            @*<a class="btn btn-primary" href="@Url.Action("Create", "Order", new { id = Model.PackageId})">See More</a>*@
             <div class="border-top border-bottom pt-3">
                 <p class="font-weight-bold">Description</p>
                 <p class="border-bottom pb-3">@Model.Description</p>
@@ -36,16 +36,16 @@
 
 
                 @if (@Model.IsAvailable == true)
-        {
-            <p class="font-weight-bold font-italic">Package Available</p>
-}
-else if (@Model.IsAvailable == false)
-{
-        <p class="font-weight-bold font-italic">Package Currently Unavailable</p>
-}
+                {
+                    <p class="font-weight-bold font-italic">Package Available</p>
+                }
+                else if (@Model.IsAvailable == false)
+                {
+                    <p class="font-weight-bold font-italic">Package Currently Unavailable</p>
+                }
 
             </div>
-            <div id="map"></div>
+            @*<div id="map"></div>*@
         </div>
     </div>
 
@@ -61,7 +61,7 @@ else if (@Model.IsAvailable == false)
             {
                 @foreach (var item in Model.Feedbacks)
                 {
-                    <div class="border-top border-bottom">
+                    <div class="border-top border-bottom mb-5">
                         <span class="p-4">@item.Rating</span>
                         <span class="p-5">@item.Description</span>
                     </div>

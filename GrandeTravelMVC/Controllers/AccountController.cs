@@ -67,24 +67,23 @@ namespace GrandeTravelMVC.Controllers
                 IdentityUser identityUser = new IdentityUser(vm.UserName);
                 IdentityResult identityResult = await _userManagerService.CreateAsync(identityUser, vm.Password);
                 identityUser.Email = vm.UserName;
-                //string sms = SmsService.SendSMSPost();
+                identityUser.PhoneNumber = vm.Mobile;
 
-                const string accountSid = "";
+                //const string accountSid = "xxx";
 
-                const string authToken = "";
+                //const string authToken = "xxx";
 
-                TwilioClient.Init(accountSid, authToken);
+                //TwilioClient.Init(accountSid, authToken);
 
-                var to = new PhoneNumber("+61" + vm.Mobile);
+                //var to = new PhoneNumber(vm.Mobile); //("+61" + vm.Mobile)
 
-                var message = MessageResource.Create(
+                //var message = MessageResource.Create(
 
-                    to,
+                //    to,
 
-                    from: new PhoneNumber(""), //  From number, must be an SMS-enabled Twilio number ( This will send sms from ur "To" numbers ).
+                //    from: new PhoneNumber("+61xxx"), //  From number, must be an SMS-enabled Twilio number ( This will send sms from ur "To" numbers ).
 
-                    body: $"Hi {vm.UserName} thanks for signing up with Grande Travel");
-
+                //    body: $"Hi {vm.UserName} thanks for signing up with Grande Travel");
 
                 if (identityResult.Succeeded)
                 {
@@ -180,6 +179,7 @@ namespace GrandeTravelMVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> UpdateCustProfile()
         {
             IdentityUser user = await _userManagerService.FindByNameAsync(User.Identity.Name);
@@ -190,10 +190,9 @@ namespace GrandeTravelMVC.Controllers
 
             AccountUpdateCustProfileViewModel vm = new AccountUpdateCustProfileViewModel
             {
-                //UserName = user.UserName,
                 FirstName = profile.FirstName,
                 LastName = profile.LastName,
-                Phone = profile.Phone,
+                Phone = user.PhoneNumber,
                 Address = profile.Address,
                 Picture = profile.Picture,
             };
@@ -203,6 +202,7 @@ namespace GrandeTravelMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> UpdateCustProfile(AccountUpdateCustProfileViewModel vm, IFormFile file)
         {
             if (ModelState.IsValid)
@@ -216,6 +216,9 @@ namespace GrandeTravelMVC.Controllers
                 profile.LastName = vm.LastName;
                 profile.Phone = vm.Phone;
                 profile.Address = vm.Address;
+
+                //limit file type
+                //if(file.Path.GetExtention != .jpg)
 
                 if (file != null)
                 {
@@ -257,7 +260,7 @@ namespace GrandeTravelMVC.Controllers
                 //UserName = user.UserName,
                 CompanyName = profile.CompanyName,
                 Website = profile.Website,
-                Phone = profile.Phone,
+                Phone = user.PhoneNumber,
                 Address = profile.Address,
                 CompanyLogo = profile.CompanyLogo,
             };
